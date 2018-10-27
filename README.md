@@ -1,2 +1,2 @@
 # awet-fleet
-Open soruce ride-sharing app
+Open source ride-sharing app
