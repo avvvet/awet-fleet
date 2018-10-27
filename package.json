@@ -1,0 +1,24 @@
+{
+  "name": "awet-fleet",
+  "version": "1.0.0",
+  "description": "open-source ride-sharing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avvvet/awet-fleet.git"
+  },
+  "keywords": [
+    "awet-fleet",
+    "open-source-ride-sharing",
+    "ride-sharing"
+  ],
+  "author": "Awet Tsegazeab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avvvet/awet-fleet/issues"
+  },
+  "homepage": "https://github.com/avvvet/awet-fleet#readme"
+}
