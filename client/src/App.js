@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { render} from 'react-dom';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
-class App extends Component {
+import './App.css';
+import TryMarker from './playground/marker';
+import TryEvent from './playground/TryEvent';
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      lat: 9.0089,
+      lng: 38.7629,
+      zoom: 16
+    }
+  }
+
   render() {
+    const position = [this.state.lat, this.state.lng];
+    const positionTwo = [9.0092, 38.7645];
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      
+      <TryEvent ></TryEvent>
+
     );
   }
 }
