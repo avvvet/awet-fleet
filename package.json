@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/avvvet/awet-fleet/issues"
   },
-  "homepage": "https://github.com/avvvet/awet-fleet#readme"
+  "homepage": "https://github.com/avvvet/awet-fleet#readme",
+  "dependencies": {
+    "leaflet": "^1.3.4"
+  }
 }
