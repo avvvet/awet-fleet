@@ -20,7 +20,7 @@ class TryEvent extends Component {
 
 
   handleClick = () => {
-    const map = this.mapRef.current
+    const map = this.mapRef.current;
     if (map != null) {
       map.leafletElement.locate();
     }
