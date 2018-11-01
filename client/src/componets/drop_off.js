@@ -3,17 +3,16 @@ import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import {Button} from 'react-bootstrap';
 import * as Nominatim from "nominatim-browser";
 
-class TryMap extends Component {
+class DropOff extends Component {
   constructor() {
       super();
       this.state = {
-          placeToGoFlag: false,
-          placeToGo: {
+          dropOffFlag: false,
+          dropOff: {
               lat: 0,
               lng: 0
           },
-          pickupAdress:'Select your pickup address from the map !'
-
+          dropOffAdress:'Select your drop off address from the map !'
       }
   }
 
@@ -26,7 +25,7 @@ class TryMap extends Component {
     .then((result : NominatimResponse) =>
     {
         this.setState({
-            pickupAdress: result.display_name
+            dropOffAdress: result.display_name
         });
         //console.log(result.display_name); // 'Minneapolis City Hall, South 4th Street, St Anthony West, Phillips, Minneapolis, Hennepin County, Minnesota, 55415, United States of America'
         // result.address is only returned when 'addressdetails: true' is sent in the request
@@ -41,14 +40,13 @@ class TryMap extends Component {
     });
 
     this.setState({
-          placeToGo : e.latlng, 
-          placeToGoFlag: true
+          dropOff : e.latlng, 
+          dropOffFlag: true
     })
   }
 
   render() {
     const position = [9.0092, 38.7645];
-
 
       return(
        <div>
@@ -61,18 +59,19 @@ class TryMap extends Component {
             <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position = {this.state.placeToGo}>
+            <Marker position = {this.state.dropOff}>
                 <Popup> distance </Popup>
             </Marker>
             </Map>
            </div>
            <div className="div-pickup">
-              <div className="style-1"><h6>Step -1 Pickup location</h6></div>
-              <div className="div-pickup-address">{this.state.pickupAdress}</div>
-              <div className="div-pickup-btn-box"><Button  href="/drop-off" bsStyle="success" bsSize="large" block>Continue</Button></div> 
+              <div className="style-1"><h6>Step -2 Drop Off location</h6></div>
+              <div className="div-pickup-address">{this.state.dropOffAdress}</div>
+              <div className="div-pickup-btn-box"><Button  bsStyle="warning" bsSize="large" block>Request Driver</Button></div> 
+              <div className="div-pickup-btn-box"><Button  href="/"  bsSize="large" block>Cancel</Button></div> 
            </div>
         </div>
       );
   }
 }
-export default TryMap;
+export default DropOff;

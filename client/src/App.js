@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Menu from './componets/menu';
 import Home from './componets/home';
 import './App.css';
+import DropOff from './componets/drop_off';
 
 
 class App extends React.Component {
@@ -29,6 +30,7 @@ class App extends React.Component {
             <Menu />
             <Switch>
                 <Route path="/" component={Home} exact />
+                <Route path="/drop-off" component={DropOff} />
             </Switch>
           </div>
         </BrowserRouter>  
