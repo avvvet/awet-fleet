@@ -3,17 +3,18 @@ import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import {Button} from 'react-bootstrap';
 import * as Nominatim from "nominatim-browser";
 
+
 class TryMap extends Component {
   constructor() {
       super();
       this.state = {
-          placeToGoFlag: false,
-          placeToGo: {
+          pickUpFlag: false,
+          pickUp: {
               lat: 0,
               lng: 0
           },
-          pickupAdress:'Select your pickup address from the map !'
-
+          pickupAdress:'Select your pickup address from the map !',
+          l: ''
       }
   }
 
@@ -41,15 +42,15 @@ class TryMap extends Component {
     });
 
     this.setState({
-          placeToGo : e.latlng, 
-          placeToGoFlag: true
+          pickUp : e.latlng, 
+          pickUpFlag: true,
+          l:localStorage.getItem("k")
     })
   }
 
   render() {
     const position = [9.0092, 38.7645];
-
-
+   
       return(
        <div>
            <div className="div-map">
@@ -61,15 +62,15 @@ class TryMap extends Component {
             <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position = {this.state.placeToGo}>
+            <Marker position = {this.state.pickUp}>
                 <Popup> distance </Popup>
             </Marker>
             </Map>
            </div>
            <div className="div-pickup">
-              <div className="style-1"><h6>Step -1 Pickup location</h6></div>
-              <div className="div-pickup-address">{this.state.pickupAdress}</div>
-              <div className="div-pickup-btn-box"><Button  href="/drop-off" bsStyle="success" bsSize="large" block>Continue</Button></div> 
+              <div className="style-1"><h6>First step : Pickup location</h6></div>
+              <div className="div-pickup-address">{this.state.l}</div>
+              <div className="div-pickup-btn-box"><Button href="/drop-off" bsStyle="success" bsSize="large" block>Continue</Button></div> 
            </div>
         </div>
       );
