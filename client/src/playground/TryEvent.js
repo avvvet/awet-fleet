@@ -1,8 +1,6 @@
 import React, { createRef, Component } from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
-
-
 class TryEvent extends Component {
   constructor() {
       super();

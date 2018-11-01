@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
+import {Button} from 'react-bootstrap';
+import * as Nominatim from "nominatim-browser";
 
 class TryMap extends Component {
   constructor() {
@@ -9,11 +11,36 @@ class TryMap extends Component {
           placeToGo: {
               lat: 0,
               lng: 0
-          }
+          },
+          pickupAdress:''
+
       }
   }
 
   handleClick = (e) => {
+    Nominatim.reverseGeocode({
+        lat: e.latlng.lat,
+        lon: e.latlng.lng,
+        addressdetails: true
+    })
+    .then((result : NominatimResponse) =>
+    {
+        this.setState({
+            pickupAdress: result.display_name
+        });
+        console.log(result.display_name); // 'Minneapolis City Hall, South 4th Street, St Anthony West, Phillips, Minneapolis, Hennepin County, Minnesota, 55415, United States of America'
+        
+        // result.address is only returned when 'addressdetails: true' is sent in the request
+        console.log(result.address.city);    // 'Minneapolis'
+        console.log(result.address.county);  // 'Hennepin County'
+        console.log(result.address.state);   // 'Minnesota'
+        console.log(result.address.country); // 'United States of America'
+    })
+    .catch((error) =>
+    {
+        console.error(error); 
+    });
+
     this.setState({
           placeToGo : e.latlng, 
           placeToGoFlag: true
@@ -23,12 +50,13 @@ class TryMap extends Component {
   render() {
     const position = [9.0092, 38.7645];
 
+
       return(
        <div>
-           <div>
+           <div className="div-map">
             <Map 
             center = {position} 
-            zoom = {16}
+            zoom = {17}
             onClick = {this.handleClick}
             >
             <TileLayer
@@ -39,7 +67,11 @@ class TryMap extends Component {
             </Marker>
             </Map>
            </div>
-           <div>Selected Pickup location : {this.state.placeToGo.lat} : {this.state.placeToGo.lng}</div>
+           <div className="div-pickup">
+              <div className=""><h6>Pick Up Location</h6></div>
+              <div className="div-pickup-address">{this.state.pickupAdress}</div>
+              <div className="div-pickup-btn-box"><Button  bsStyle="success" bsSize="large" block>Continue</Button></div> 
+           </div>
         </div>
       );
   }
