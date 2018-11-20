@@ -9,7 +9,8 @@ import Menu from './componets/menu';
 import './App.css';
 import PickUp from './componets/pick_up';
 import DropOff from './componets/drop_off';
-import Test from './playground/Test';
+import LeafLetModule from './playground/leaflet_module';
+
 
 class App extends React.Component {
   constructor() {
@@ -34,6 +35,7 @@ class App extends React.Component {
             <Switch>
                 <Route path="/" component={PickUp} exact />
                 <Route path="/drop-off" render={()=><DropOff/>} />
+                <Route path="/leaflet" render={()=><LeafLetModule/>} />
             </Switch>
           </div>
         </BrowserRouter>  
