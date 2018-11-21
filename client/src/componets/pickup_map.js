@@ -22,7 +22,7 @@ class PickUpMap extends Component {
 
     componentDidMount(){
         var map = L.map('mapid').setView([9.0092, 38.7645], 16);
-        map.locate({setView: true, maxZoom: 14});
+       // map.locate({setView: true, maxZoom: 17});
         
         this.setState({map : map});
 
@@ -37,7 +37,7 @@ class PickUpMap extends Component {
             var radius = e.accuracy / 128;
         
             L.marker(e.latlng).addTo(map)
-                .bindPopup("Your pickup location is " + radius + " meters from this point").openPopup();
+                .bindPopup("YOU are" + radius + " meters from this point").openPopup();
         
             L.circle(e.latlng, radius).addTo(map);
         }
@@ -58,7 +58,6 @@ class PickUpMap extends Component {
         var markersLayer = this.state.markersLayer;
         
         map.on('click', (e) => {
-            console.log(e.latlng);
             Nominatim.reverseGeocode({
                 lat: e.latlng.lat,
                 lon: e.latlng.lng,

@@ -35,7 +35,6 @@ class App extends React.Component {
             <Switch>
                 <Route path="/" component={PickUp} exact />
                 <Route path="/drop-off" render={()=><DropOff/>} />
-                <Route path="/leaflet" render={()=><LeafLetModule/>} />
             </Switch>
           </div>
         </BrowserRouter>  

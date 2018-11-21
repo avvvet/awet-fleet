@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import L from 'leaflet';
-import {Button, Badge, Grid, Row, Col} from 'react-bootstrap';
+import {Button, Image, Badge, Grid, Row, Col} from 'react-bootstrap';
 import * as Nominatim from "nominatim-browser";
 import GeometryUtil from 'leaflet-geometryutil';
 import {Routing} from 'leaflet-routing-machine';
@@ -24,6 +24,12 @@ class DropOffMap extends Component {
             map : '',
             markersLayer: ''
         }
+    }
+
+    onRequest = () => {
+       document.getElementById('div-process').innerHTML='';
+       //send ajax request pickup address and wait for driver - this will return the driver
+       document.getElementById('div-request').style.visibility = 'visible';
     }
 
     componentDidMount(){
@@ -70,7 +76,8 @@ class DropOffMap extends Component {
         if(this.state.dropoff_flag && this.state.pickup_flag) {
             var latlng1 = this.state.pickup_latlng;
             var latlng2 = this.state.dropoff_latlng;
-            refreshDistanceAndLength(latlng1, latlng2);
+            //refreshDistanceAndLength(latlng1, latlng2);
+            shortesRoute(latlng1, latlng2);
         }
 
         function refreshDistanceAndLength(latlng1, latlng2){
@@ -82,37 +89,111 @@ class DropOffMap extends Component {
 
             document.getElementById('ride_price').innerHTML = _ride_price + ' Birr';
             document.getElementById('distance').innerHTML = _distance + ' km';
-
-            //routing 
+        }
+        
+        function shortesRoute(latlng1, latlng2){
             L.Routing.control({
                 waypoints: [
                  latlng1,
                  latlng2
                 ]
-            }).addTo(map);  
-        }    
+            })
+            .on('routesfound', function(e) {
+                var routes = e.routes;
+                var _distance = routes[0].summary.totalDistance;
+                var _ride_time = routes[0].summary.totalTime;
+                
+                _distance = Number.parseFloat(_distance/1000).toFixed(2);
+                _ride_time = timeConvert(Number.parseInt(_ride_time));
+
+                var price_per_km = 25;
+                var _ride_price = Number.parseFloat(_distance * price_per_km).toFixed(2);
+                
+                document.getElementById('ride_price').innerHTML = _ride_price + ' Birr';
+                document.getElementById('distance').innerHTML = _distance + ' km';
+                document.getElementById('ride_time').innerHTML = _ride_time;
+            })
+            .addTo(map);  
+        }
+
+       function timeConvert(n) {
+           var num = n;
+           var hours = (num / 3600);
+           var rhours = Math.floor(hours);
+           var minutes = (hours - rhours) * 60;
+           var rminutes = Math.round(minutes);
+           
+           var hDisplay = rhours > 0 ? rhours + " hr" : "";
+           var mDisplay = rminutes > 0 ? rminutes + " min" : "";
+           return hDisplay + mDisplay; 
+        }
     }
-    
+
     render(){    
         return(
             
             <div>
               <div className="mapid" id="mapid"></div>
-                <div className="div-pickup">
+              <div className="div-request" id="div-request">
+                    <div>
+                    <Grid fluid={true}>
+                        <Row>
+                            <Col xs={6} md={6}>
+                               <Image src="/assets/awet-ride.jpeg" height={45} circle></Image>  
+                            </Col>
+
+                            <Col xs={6} md={6}>
+                               <Image src="/assets/awet-ride-driver.jpeg" height={45} circle></Image>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col xs={6} md={6}>
+                                Lifan x345 i
+                            </Col>
+
+                            <Col xs={6} md={6}>
+                                Nati Sahle
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col xs={6} md={6}>
+                                A34587
+                            </Col>
+
+                            <Col xs={6} md={6}>
+                               0911003994
+                            </Col>
+                        </Row>
+
+                    </Grid>
+                    </div>
+                       
+                    
+                </div>
+
+                <div className="div-ride-price">
                 <div>
                   <Grid fluid={true}>
                       <Row>
-                          <Col xs={6} md={6}>
+                          <Col xs={4} md={4}>
                             Price <Badge><div id="ride_price"></div></Badge>   
                           </Col>
 
-                          <Col xs={6} md={6}>
+                          <Col xs={4} md={4}>
                            Distance <Badge><div id="distance"></div></Badge>
+                          </Col>
+
+                          <Col xs={4} md={4}>
+                           Time <Badge><div id="ride_time"></div></Badge>
                           </Col>
                       </Row>
                   </Grid>
                   </div>
-                  <div className="div-pickup-btn-box"><Button href="/drop-off" bsStyle="success" bsSize="large" block>Request Driver</Button></div> 
+                  <div id="div-process" className="div-process">
+                   <div className="div-pickup-btn-box"><Button  onClick={this.onRequest} bsStyle="success" bsSize="small">Request Driver</Button></div> 
+                  </div>
               </div>
             </div>
         );

@@ -29,6 +29,43 @@
   box-sizing: border-box;
 }
 
+.div-ride-price {
+  color: black;
+  position: absolute;
+  bottom: 100px;
+  right: 50%;
+  width: 260px;
+  height: 100px;
+  border: 2px solid white;
+  background-color: white;
+  transform: translate(50%, 50%);
+  z-index: 2000;
+  padding: 5px;
+  margin: 2px;
+  text-align: center;
+  box-shadow: 10px 10px 10px gray;
+  box-sizing: border-box;
+}
+
+.div-request {
+  color: #454242;
+  position: absolute;
+  bottom: 205px;
+  right: 50%;
+  width: 260px;
+  height: 100px;
+  border: 2px solid white;
+  background-color: #eef9e9;
+  transform: translate(50%, 50%);
+  z-index: 2000;
+  padding: 5px;
+  margin: 2px;
+  text-align: center;
+  box-shadow: 10px 10px 10px gray;
+  box-sizing: border-box;
+  visibility: hidden;
+}
+
 .div-pickup-btn-box {
   margin: 5px;
   bottom: 5px;
